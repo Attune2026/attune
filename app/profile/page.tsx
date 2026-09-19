@@ -1,45 +1,32 @@
 'use client'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '../utils/supabase/client'
 
-export default function SignUp() {
+export default function LogIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [done, setDone] = useState(false)
+  const router = useRouter()
   const supabase = createClient()
 
-  async function handleSignUp(e: React.FormEvent) {
+  async function handleLogIn(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
-    const { error } = await supabase.auth.signUp({ email, password })
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
     setLoading(false)
     if (error) setError(error.message)
-    else setDone(true)
-  }
-
-  if (done) {
-    return (
-      <main className="min-h-screen flex items-center justify-center bg-paper px-6">
-        <div className="bg-white rounded-3xl border border-black/5 shadow-xl shadow-black/5 p-8 max-w-sm w-full text-center">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-coral to-gold mx-auto mb-5 flex items-center justify-center text-white text-2xl">
-            ✓
-          </div>
-          <h1 className="font-serif text-2xl font-semibold text-ink mb-2">Check your email</h1>
-          <p className="text-ink/60 text-sm">Confirm your address, then log in to get started.</p>
-        </div>
-      </main>
-    )
+    else router.push('/dashboard')
   }
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-paper px-6">
-      <form onSubmit={handleSignUp} className="w-full max-w-sm">
+      <form onSubmit={handleLogIn} className="w-full max-w-sm">
         <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-coral to-gold mb-6" />
-        <h1 className="font-serif text-3xl font-semibold text-ink mb-2 tracking-tight">Create your account</h1>
-        <p className="text-ink/50 mb-8">Takes less than a minute.</p>
+        <h1 className="font-serif text-3xl font-semibold text-ink mb-2 tracking-tight">Welcome back</h1>
+        <p className="text-ink/50 mb-8">Log in to keep the conversation going.</p>
 
         <div className="bg-white rounded-3xl border border-black/5 shadow-xl shadow-black/5 p-7 space-y-5">
           <div>
@@ -72,13 +59,13 @@ export default function SignUp() {
                        shadow-lg shadow-coral/30 hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0
                        transition disabled:opacity-60"
           >
-            {loading ? 'Creating account...' : 'Continue'}
+            {loading ? 'Logging in...' : 'Log in'}
           </button>
         </div>
 
         <p className="text-center text-sm text-ink/50 mt-6">
-          Already have an account?{' '}
-          <a href="/login" className="text-coral font-semibold">Log in</a>
+          New to Attune?{' '}
+          <a href="/signup" className="text-coral font-semibold">Create account</a>
         </p>
       </form>
     </main>

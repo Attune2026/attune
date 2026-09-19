@@ -8,10 +8,16 @@ export default async function Dashboard() {
   if (!user) redirect('/login')
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-[#FCFAF6] px-6">
+    <main className="min-h-screen flex items-center justify-center bg-paper px-6">
       <div className="text-center">
-        <p className="text-2xl font-semibold text-[#171B24] mb-2">You're logged in 🎉</p>
-        <p className="text-[#6B7280]">{user.email}</p>
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-coral to-gold mx-auto mb-6 flex items-center justify-center text-white text-2xl">
+          🎉
+        </div>
+        <p className="font-serif text-3xl font-semibold text-ink mb-2">You're logged in</p>
+        <p className="text-ink/50">{user.email}</p>
+        <a href="/profile" className="inline-block mt-8 bg-ink text-white font-bold rounded-2xl px-6 py-3.5">
+          Go to your profile
+        </a>
       </div>
     </main>
   )
