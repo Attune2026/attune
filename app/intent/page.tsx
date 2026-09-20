@@ -31,7 +31,7 @@ export default function Intent() {
         .from('profiles')
         .select('looking_for')
         .eq('user_id', user.id)
-        .single()
+        .maybeSingle()
 
       if (data?.looking_for) setSelected(data.looking_for)
     }
